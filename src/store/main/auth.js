@@ -41,12 +41,12 @@ export const auth = {
 
                 commit('SET_LAYOUT', 'def')
             }
-        } ,
+        },
         async checkUser({dispatch, commit}){
             if(cookies.isKey('hospital-user') && cookies.isKey('hospital-token')){
                 commit('SET_USER', cookies.get('hospital-user'))
                 commit('SET_TOKEN', cookies.get('hospital-token'))
-
+                
                 let user = cookies.get('hospital-user')
                 let res = await dispatch('postAxios',{
                     url: `auth/checkuser`,
@@ -56,7 +56,14 @@ export const auth = {
                 })
                 if(res.status == 200){
                     console.log(res.data)
+                    cookies.set('hospital-user', res.data)
+                    commit('SET_USER', res.data)
+                    commit('SET_LAYOUT', 'def')
                 }
+            }else{
+                cookies.remove('hospital-user')
+                cookies.remove('hospital-token')
+                commit('SET_LAYOUT', 'auth')
             }
         }
     }
