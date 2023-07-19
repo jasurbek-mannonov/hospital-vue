@@ -6,14 +6,14 @@ export const helpers = {
         async getAxios({getters}, payload){
             return await http.get(`${getters.mainUrl}/${payload}`, {
                 headers: {
-                    "Authorization": `Bearer ${getters.token}`
+                    "authorization": `Bearer ${getters.token}`
                 }
             })
         },
         async postAxios({getters, commit}, payload){
             return await http.post(`${getters.mainUrl}/${payload.url}`, payload.data, {
                 headers: {
-                    "Authorization": `Bearer ${getters.token}`
+                    "authorization": `Bearer ${getters.token}`
                 }
             }).catch(e => {
                 let {data, status} = e.response

@@ -9,7 +9,7 @@
         v-for="item, index of links" 
         :key="index"
         :to="item.link">
-        <img :src="`@/assets/img/${item.icon}.svg`" alt="icon">
+        <img :src="getImg(item.icon)" alt="icon">
         {{ item.title }}
         </router-link>
         <!-- <a class="active" href="index.html">
@@ -41,7 +41,7 @@ export default {
             {
                 link: '/',
                 title: 'Bosh sahifa',
-                icon: 'home'
+                icon: 'Vector'
             },
             {
                 link: '/department',

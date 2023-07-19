@@ -8,6 +8,6 @@ export const modules = {
   auth,
   layout,
   helpers,
+  department,
   notif,
-  department
 }

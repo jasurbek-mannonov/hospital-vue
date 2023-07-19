@@ -1,4 +1,8 @@
+export const addZero = (val) => {
+    return val < 10 ? `0{val}` : val
+}
+
 export const convertDate = (d) => {
     let date = new Date(d)
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+    return `${addZero(date.getDate())}/${addZero(date.getMonth()) + 1}/${date.getFullYear()}`
 }

@@ -9,7 +9,7 @@ export const layout = {
     },
     mutations: {
         SET_LAYOUT(state, payload){
-            state.payload = payload
+            state.layout = payload
         }
     },
 }

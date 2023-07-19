@@ -14,7 +14,7 @@ export const department = {
             return department
         },
         countDepartment({countDepartment}){
-            return this.countDepartment
+            return countDepartment
         },
         activeDepartments({departments}){
             return departments.filter(department => department.status == 0)
@@ -28,9 +28,7 @@ export const department = {
             })]
         },
         NEW_DEPARTMENT(state, payload){
-            state.departments = 
-            [{...payload, createdTime:convertDate(payload.createdTime)},
-                 ...state.departments]
+            state.departments = [{...payload, createdTime:convertDate(payload.createdTime)}, ...state.departments]
         },
         UPDATE_DEPARTMENT(state, payload){
             state.departments = state.departments.map(department => {

@@ -20,7 +20,7 @@ export default{
     ]),
   },
   mounted(){
-    this.$store.dispatch('auth/checkUser')
+    this.$store.dispatch('checkUser')
   }
 }
 </script>

@@ -64,7 +64,7 @@ import { mapGetters } from 'vuex'
 export default {
   data: () => ({
     toggle: false,
-    editToggle: false,
+    editToggle: true,
     title: "",
     token: '',
     notif: {}
@@ -107,7 +107,7 @@ export default {
       }
     },
   mounted() {
-    this.$store.dispatch('department/getAllDepartments')
+    this.$store.dispatch('getAllDepartments')
   }
 }
 }

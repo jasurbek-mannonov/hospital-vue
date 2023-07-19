@@ -1,11 +1,10 @@
-import http from "../utils/http";
 
 import { createStore } from "vuex";
 import { modules } from "./main/modules";
 
 export const store = createStore({
     state: () => ({
-        url: http
+        url: import.meta.env.VITE_APP_API_URL
     }),
     getters: {
         mainUrl(state){
