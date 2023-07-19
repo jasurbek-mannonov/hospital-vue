@@ -1,19 +1,19 @@
-import axios from "axios"
+import http from '../../utils/http'
 import cookies  from "vue-cookies"
 
 export const helpers = {
     actions: {
         async getAxios({getters}, payload){
-            return await axios.get(`${getters.mainUrl}/${payload}`, {
+            return await http.get(`${getters.mainUrl}/${payload}`, {
                 headers: {
-                    "authorization": `Bearer ${getters.token}`
+                    "Authorization": `Bearer ${getters.token}`
                 }
             })
         },
         async postAxios({getters, commit}, payload){
-            return await axios.post(`${getters.mainUrl}/${payload.url}`, payload.data, {
+            return await http.post(`${getters.mainUrl}/${payload.url}`, payload.data, {
                 headers: {
-                    "authorization": `Bearer ${getters.token}`
+                    "Authorization": `Bearer ${getters.token}`
                 }
             }).catch(e => {
                 let {data, status} = e.response
@@ -26,8 +26,7 @@ export const helpers = {
                     cookies.remove('hospital-token')
                     commit('SET_LAYOUT', 'auth')
                 }
-                console.log(e.response)
-                // console.clear()
+                console.clear()
             })
         }
     }
