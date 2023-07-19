@@ -65,15 +65,6 @@ import notif from '../components/notif.vue'
             }
           }
         },
-        mounted(){
-          this.$store.dispatch('posts/getPosts')
-          this.$store.dispatch('album/getAllAlbums')
-        },
-        computed: {
-          posts(){
-            return this.$store.getters.posts
-          }
-      },
     }
 </script>
 

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <form @submit.prevent="handleFormSubmit">
     <div>
       <label>
@@ -58,4 +58,4 @@ button {
 form > div {
   margin-bottom: 20px;
 }
-</style>
+</style> -->

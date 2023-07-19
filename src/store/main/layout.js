@@ -1,6 +1,6 @@
 export const layout = {
     state: () => ({
-        layout: 'def'
+        layout: 'auth'
     }),
     getters: {
         layout({layout}){

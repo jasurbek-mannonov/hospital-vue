@@ -55,7 +55,7 @@ export const auth = {
                     }
                 })
                 if(res.status == 200){
-                    // console.log(res.data)
+                    console.log(res.data)
                     cookies.set('hospital-user', res.data)
                     commit('SET_USER', res.data)
                     commit('SET_LAYOUT', 'def')

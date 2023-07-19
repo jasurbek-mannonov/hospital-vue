@@ -26,7 +26,7 @@ export const helpers = {
                     cookies.remove('hospital-token')
                     commit('SET_LAYOUT', 'auth')
                 }
-                console.clear()
+                // console.clear()
             })
         }
     }
