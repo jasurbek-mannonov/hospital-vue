@@ -41,7 +41,13 @@ export const auth = {
 
                 commit('SET_LAYOUT', 'def')
             }
-        },   
+        },  
+        async register({dispatch}, payload){
+           return await dispatch('postAxios', {
+                url: 'auth/reg',
+                data: payload
+            })
+        },
         async checkUser({dispatch, commit}){
             if(cookies.isKey('hospital-user') && cookies.isKey('hospital-token')){
                 commit('SET_USER', cookies.get('hospital-user'))
@@ -65,6 +71,15 @@ export const auth = {
                 cookies.remove('hospital-token')
                 commit('SET_LAYOUT', 'auth')
             }
+        },
+        exit({commit}){
+            cookies.remove('hospital-user')
+            cookies.remove('hospital-token')
+            commit('SET_LAYOUT', 'auth')
+            commit('SET_NOTIF', {
+                type: 'warning',
+                text: 'Tizimdan chiqdingiz!'
+            })
         }
     }
 }

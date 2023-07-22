@@ -10,6 +10,7 @@
           <th>Nom</th>
           <th>Yaratilgan vaqt</th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -17,7 +18,16 @@
             <td>{{index + 1}}</td>
             <td>{{ department.title }}</td>
             <td>{{ department.createdTime }}</td>
-            <td></td>
+            <td>
+              <button @click="remove(department._id)">
+                <img src="../assets/img/remove.svg" alt="remove icon">
+              </button>
+            </td>
+            <td>
+              <button @click="edit(department._id)">
+                <img src="../assets/img/edit.svg" alt="edit icon">
+              </button>
+            </td>
         </tr>
       </tbody>
     </table>
@@ -36,22 +46,22 @@
 
   <div :class="`modal ${toggle ? 'open' : ''}`">
     <div class="modal__box">
-      <h4 class="text-center mb-20">Yangi ma'lumot qo'shish</h4>
-      <form id="depart" @submit.prevent="add()">
+      <h4 class="text-center mb-20">{{ editToggle ? `Yangi ma'lumot qo'shish` : `Bo'limni tahrirlash` }}</h4>
+      <form id="depart" @submit.prevent="editToggle ? add() : save()">
         <input
-          class="input"
+          class="input" 
           type="text"
           placeholder="Bo'lim nomini kiriting"
-          v-model="title"
-          @keypress.enter="add( )"
+          v-model="department.title"
+          @keypress.enter="editToggle ? add() : save()"
         />
       </form>
       <div class="modal__footer mt-20">
-        <button class="btn danger" @click="toggle = false">Bekor qilish</button>
-        <button class="btn success btn__add" v-if="editToggle" @click="save()">
+        <button class="btn danger" @click="clear()">Bekor qilish</button>
+        <button class="btn success btn__add" v-if="editToggle" @click="add()">
           Kiritish
         </button>
-        <button class="btn success btn__edit hide" v-else @click="add()">
+        <button class="btn success btn__edit hide" v-else @click="save()">
           Saqlash
         </button>
       </div>
@@ -60,14 +70,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   data: () => ({
     toggle: false,
     editToggle: true,
-    title: "",
-    token: '',
-    notif: {}
+    department: {},
   }),
   computed: {
     ...mapGetters([
@@ -75,41 +83,50 @@ export default {
     ])
   },
   methods: {
+    ...mapActions([
+      'getAllDepartments',
+      'addDepartment',
+      'deleteDepartment',
+      'getDepartment',
+      'saveDepartment'
+    ]),
     async add() {
-      if (this.title) {
-        let res = await axios.post(`${url}/department`, {
-          title: this.title,
-        },{
-            headers: {
-                'authorization' : `Bearer ${this.token}`
-            }
-        })
-        if (res.status == 201) {
-          this.notif = {
-            type: "success",
-            text: "Yangi bo\'lim muvaffaqiyatli qo'shildi",
-          }
-          this.toggle = false
-          this.title = ''
-          this.departments = [res.data, ...this.departments]
-          setTimeout(() => {
-            this.notif = {};
-          }, 1200);
-        }
+      if (this.department.title) {
+        this.addDepartment(this.department)
+        this.clear()
       } else {
-        this.notif = {
-          type: "warning",
-          text: "Bo'lim nomini kiriting!",
-        };
-        setTimeout(() => {
-          this.notif = {};
-        }, 1200);
+        this.$store.commit('SET_NOTIF', {
+          type: 'warning',
+          text: "Bo'lim nomini kiriting!"
+        })
       }
     },
+    save(){
+      this.saveDepartment(this.department)
+      this.clear()
+    },
+    async edit(id){
+      let res = await this.getDepartment(id)
+      if(res.status == 200){
+        this.department = {...res.data}
+        this.toggle = true
+        this.editToggle = false
+      }
+    },
+    remove(id){
+      if(confirm("Qaroringiz qat'iymi?")){
+        this.deleteDepartment(id)
+      }
+    },
+    clear(){
+      this.toggle = false,
+      this.department = {}
+      this.editToggle = true
+    }
+  },
   mounted() {
-    this.$store.dispatch('getAllDepartments')
+    this.getAllDepartments()
   }
-}
 }
 </script>
 

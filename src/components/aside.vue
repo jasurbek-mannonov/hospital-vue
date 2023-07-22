@@ -12,24 +12,11 @@
         <img :src="getImg(item.icon)" alt="icon">
         {{ item.title }}
         </router-link>
-        <!-- <a class="active" href="index.html">
-        <img src="./assets/img/Vector.svg" alt="Bosh sahifa">
-        Bosh sahifa</a>
-        <a class="" href="department.html">
-        <img src="./assets/img/department.svg" alt="Bo'limlar">
-        Bo'limlar</a>
-        <a class="" href="spec.html">
-        <img src="./assets/img/department.svg" alt="Mutaxassisliklar">
-        Mutaxassisliklar</a>
-        <a class="" href="room.html">
-        <img src="./assets/img/palata.svg" alt="Palatalar">
-        Palatalar</a>
-        <a class="" href="doctor.html">
-        <img src="./assets/img/doctors.svg" alt="Shifokorlar">
-        Shifokorlar</a>
+        <!--
         <a class="" href="patient.html">
         <img src="./assets/img/bemor.svg" alt="Bemorlar">
         Bemorlar</a> -->
+        <button @click="logout()">Chiqish</button>
     </nav>
   </aside>
 </template>
@@ -47,12 +34,32 @@ export default {
                 link: '/department',
                 title: 'Bo\'limlar',
                 icon: 'department'
+            },
+            {
+                link: '/spec',
+                title: 'Mutaxassisliklar',
+                icon: 'department'
+            },
+            {
+                link: '/room',
+                title: 'Palatalar',
+                icon: 'palata'
+            },
+            {
+                link: '/doctor',
+                title: 'Shifokorlar',
+                icon: 'doctors'
             }
         ]
     }),
     methods: {
       getImg(link){
         return new URL(`/src/assets/img/${link}.svg`, import.meta.url)
+      },
+      logout(){
+        if(confirm("Qaroringiz qat'iymi")){
+          this.$store.dispatch('exit')
+        }
       }
     }
 };

@@ -48,9 +48,47 @@ export const department = {
         async getAllDepartments({dispatch, commit}){
             let res = await dispatch('getAxios', 'department') 
             if(res.status == 200){
-                console.log(res.data)
                 commit('SET_DEPARTMENTS', res.data)
             }
+        },
+        async addDepartment({dispatch, commit},payload){
+            let res = await dispatch('postAxios', {
+                url: `department`,
+                data: payload
+            })
+            if(res.status == 201){
+                commit('NEW_DEPARTMENT', res.data)
+                commit('SET_NOTIF', {
+                    type: 'success',
+                    text: "Yangi bo'lim qo'shildi!"
+                })
+            }
+        },
+        async deleteDepartment({dispatch, commit}, payload){
+            let res = await dispatch('deleteAxios', `department/${payload}`)
+            if(res.status == 200){
+                commit('DELETE_DEPARTMENT', payload)
+                commit('SET_NOTIF', {
+                    type: 'warning',
+                    text: "Bo'lim o'chirildi!"
+                })
+            }
+        },
+        async getDepartment({dispatch}, payload){
+            return await dispatch('getAxios', `department/${payload}`)
+        },
+        async saveDepartment({dispatch, commit}, payload){
+            let res = await dispatch('putAxios', {
+                url: 'department',
+                data: payload
+            })
+            if(res.status == 200){
+                commit('UPDATE_DEPARTMENT', res.data)
+                  commit('SET_NOTIF', {
+                    type: 'warning',
+                    text: "Ma'lumot yangilandi!"
+                })
+            }        
         }
     }
 }
